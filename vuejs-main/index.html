@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vus Js</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- Normal String -->
+	  	<p>{{name}}</p>
+
+	  	<!-- Events -->
+	  	<button v-on:click="reverseMessage">Reverse</button>
+
+	  	<!-- Binding Attributes -->
+	  	<img v-bind:src="photo" alt="MyImg" width="200">
+
+	  	<!-- Conditionals -->
+	  	<p v-if="seen">Now you see my dog</p>
+	  	<p v-else>Value of seen == false</p>
+
+	  	<p v-if="mark>40">Passed</p>
+	  	<p v-else>Failed</p>
+
+	  	<!-- Looping -->
+	  	<ol>
+	  		<li v-for="c in color">{{c}}</li>
+	  	</ol>
+
+	  	<!-- <ul>
+	  		<li v-for="todo in todos">{{todo.text}}</li>
+	  	</ul> -->
+	  	<ul>
+	  		<todo-item v-for="todo in todos" v-bind:todo="todo"></todo-item>
+	  	</ul>
+
+	  	<!-- Computed -->
+	  	<p>Old Student</p>
+	  	<ul>
+	  		<li v-for="student in oldStudent">{{student.name}} - {{student.age}}</li>
+	  	</ul>
+
+	  	<p>Pass Student</p>
+	  	<ul>
+	  		<li v-for="student in passedStudent">{{student.name}} - {{student.age}}</li>
+	  	</ul>
+	  	<!-- From Input -->
+	  	<input type="text" name="email" v-model="email">
+	  	{{email}}
+	</div>
+
+	<script type="text/javascript">
+		Vue.component('todo-item', {
+			props: ['todo'],
+		  	template: '<div><p>This is P Tag</p>Hello <span v-html="a.text"></span></div>'
+		})
+		var app = new Vue({
+		  el: '#app',
+		  data: {
+		   	photo: '../image/dog.jpg',
+		    name: 'My Dog',
+		    seen: true,
+		    mark: 70,
+		    color: ['red', 'green' , 'white'],
+		    todos: [
+		      { text: 'Learn JavaScript' },
+		      { text: 'Learn Vue' },
+		      { text: 'Build something awesome' }
+		    ],
+		    email:'',
+		    students:[
+		    	{name: 'Aye Aye', age: 20, exam: true},
+		    	{name: 'Ba Ba', age: 18, exam: false},
+		    	{name: 'Maung Maung', age: 25, exam: true},
+		    ]
+		  },
+		  methods:{
+		  	reverseMessage(){
+		  		this.name = this.name.split('').reverse().join('')
+		  	}
+		  },
+		  computed:{
+		  	passedStudent(){
+		  		return this.students.filter(student=>student.exam==true)
+		  	},
+		  	oldStudent(){
+		  		return this.students.filter(student=>student.age>18)
+		  	}
+		  }
+		})
+	</script>
+</body>
+</html>
